@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokemon Stat Calculator</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        header {
+            background-color: #D54B4B;
+            color: white;
+            text-align: center;
+            padding: 1rem;
+            border-radius: 5px;
+        }
+        h1, h2 {
+            margin-bottom: 0.5rem;
+        }
+        .calculator, .description {
+            background-color: white;
+            border-radius: 5px;
+            padding: 20px;
+            margin-top: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        input, button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        #result {
+            margin-top: 20px;
+            font-weight: bold;
+            text-align: center;
+            padding: 10px;
+            background-color: #e7f3fe;
+            border-radius: 4px;
+        }
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #333;
+            color: white;
+            border-radius: 5px;
+        }
+        footer a {
+            color: #4CAF50;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Pokemon Stat Calculator</h1>
+    </header>
+    
+    <div class="calculator">
+        <h2>Calculate Pokemon Stats</h2>
+        <input type="number" id="baseStats" placeholder="Enter Base Stat">
+        <input type="number" id="iv" placeholder="Enter IV (0-31)">
+        <input type="number" id="ev" placeholder="Enter EV (0-252)">
+        <input type="number" id="level" placeholder="Enter Pokemon Level (1-100)">
+        <button onclick="calculateStat()">Calculate Stat</button>
+        <div id="result"></div>
+    </div>
+
+    <div class="description">
+        <h2>How to Use</h2>
+        <ol>
+            <li>Enter the Pokemon's base stat for the specific stat you're calculating.</li>
+            <li>Input the IV (Individual Value) for the stat (0-31).</li>
+            <li>Enter the EV (Effort Value) invested in the stat (0-252).</li>
+            <li>Specify the Pokemon's level (1-100).</li>
+            <li>Click <a href="https://pokemon-type-calculator-fw3ah82kl-student-infos-projects.vercel.app/">Calculate Stat</a>  to see the result.</li>
+        </ol>
+
+        <h2>Benefits</h2>
+        <ul>
+            <li>Accurately predict your Pokemon's stats at any level.</li>
+            <li>Optimize EV training by seeing the impact on stats.</li>
+            <li>Plan your team's stat distribution for competitive battles.</li>
+            <li>Understand how IVs and base stats affect overall performance.</li>
+            <li>Great tool for both casual players and competitive battlers.</li>
+        </ul>
+    </div>
+
+    <footer>
+        For more advanced Pokemon tools, competitive strategies, and comprehensive guides, visit our main website: 
+        <a href="https://pokemontypecalculator.org/" target="_blank">www.pokemontypecalculator.org</a>
+    </footer>
+
+    <script>
+        function calculateStat() {
+            const baseStat = parseInt(document.getElementById('baseStats').value);
+            const iv = parseInt(document.getElementById('iv').value);
+            const ev = parseInt(document.getElementById('ev').value);
+            const level = parseInt(document.getElementById('level').value);
+
+            if (isNaN(baseStat) || isNaN(iv) || isNaN(ev) || isNaN(level)) {
+                document.getElementById('result').innerText = "Please enter valid numbers for all fields.";
+                return;
+            }
+
+            if (iv < 0 || iv > 31 || ev < 0 || ev > 252 || level < 1 || level > 100) {
+                document.getElementById('result').innerText = "Please enter valid ranges for IV (0-31), EV (0-252), and level (1-100).";
+                return;
+            }
+
+            // This is the formula for calculating a Pokemon's stat (except HP)
+            const stat = Math.floor(((2 * baseStat + iv + Math.floor(ev / 4)) * level / 100) + 5);
+
+            document.getElementById('result').innerText = `Calculated Stat: ${stat}`;
+        }
+    </script>
+</body>
+</html>
